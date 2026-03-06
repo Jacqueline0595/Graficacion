@@ -10,7 +10,9 @@
                 "${file}",
                 "${fileDirname}/cpp/**.cpp",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "-larmadillo",
+                "-lopenblas"
             ],
             "options": {
                 "cwd": "${fileDirname}"
