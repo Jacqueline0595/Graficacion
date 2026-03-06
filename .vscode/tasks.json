@@ -6,7 +6,7 @@
             "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
             "args": [
                 "-fdiagnostics-color=always",
-                "-g",
+                "-O2",
                 "${file}",
                 "${fileDirname}/cpp/*.cpp",
                 "-I",
