@@ -27,7 +27,7 @@ int main()
     arma::Mat<float> Ry2 = an.Ry(-59.0362);
     arma::Mat<float> v1pp = Ry2 * v1p;
     arma::Mat<float> v2pp = Ry2 * v2p;
-    cout << v1pp.t() << endl;
-    cout << v2pp.t() << endl;
+    cout << "v1pp: " << v1pp.t() << endl;
+    cout << "v2pp: " << v2pp.t() << endl;
     return 0;
 }
