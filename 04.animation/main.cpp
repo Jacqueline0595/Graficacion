@@ -37,7 +37,7 @@ int main()
     cout << "v1pp: " << v1pp.t() << endl;
     cout << "v2pp: " << v2pp.t() << endl;
 
-    // v1pp = (0.0008, 8.9, -12.5160)
+    // v1pp = (-0.0008, 8.9, -12.5160)
     // v2pp = (0,0,0)
 
     // tan ^ -1 ( 8.9 / -12.5160 ) = -35.4162
@@ -49,5 +49,8 @@ int main()
 
     cout << "v1ppp: " << v1ppp.t() << endl;
     cout << "v2ppp: " << v2ppp.t() << endl; 
+
+    // v1pp = (-0.0008, 0.0017, -15.3577)
+    // v2pp = (0,0,0)
     return 0;
 }
