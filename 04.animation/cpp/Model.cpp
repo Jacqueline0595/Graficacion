@@ -33,13 +33,3 @@ void Model::info()
     cout << "Numero de vertices: " << this->vertices.size() << endl;
     cout << "Numero de caras: " << this->faces.size() << endl;
 }
-
-// reactivo 1
-void Model::printPolygons()
-{
-    for (int i = 0; i < faces.size(); i++)
-    {
-        cout << "La cara es :" << i + 1 << ": ";
-        faces[i].printPoly();
-    }
-}

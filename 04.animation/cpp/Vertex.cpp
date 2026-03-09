@@ -46,29 +46,6 @@ float Vertex::get_z()
     return(this->z);
 }
 
-// reactivo 1
-void Vertex::printOctant()
-{
-    if (x > 0 && y > 0 && z > 0)
-        cout << "Esta en el octante 1" << endl;
-    else if (x < 0 && y > 0 && z > 0)
-        cout << "Esta en el octante 2" << endl;
-    else if (x < 0 && y < 0 && z > 0)
-        cout << "Esta en el octante 3" << endl;
-    else if (x > 0 && y < 0 && z > 0)
-        cout << "Esta en el octante 4" << endl;
-    else if (x > 0 && y > 0 && z < 0)
-        cout << "Esta en el octante 5" << endl;
-    else if (x < 0 && y > 0 && z < 0)
-        cout << "Esta en el octante 6" << endl;
-    else if (x < 0 && y < 0 && z < 0)
-        cout << "Esta en el octante 7" << endl;
-    else if (x > 0 && y < 0 && z < 0)
-        cout << "Esta en el octante 8" << endl;
-    else
-        cout << "El vertice esta sobre el eje" << endl;
-}
-
 arma::Col<float> Vertex::h()
 {
     arma::Col<float> ch = {this->x, this->y, this->z, 1};
