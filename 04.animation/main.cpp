@@ -30,5 +30,9 @@ int main()
                             { 0, (P2.get_z()-P1.get_z()) / D2, -(P2.get_y()-P1.get_y()) / D2, 0},
                             { 0, (P2.get_y()-P1.get_y()) / D2, (P2.get_z()-P1.get_z()) / D2, 0},
                             { 0, 0, 0, 1} };
+
+    cout << "T: " << T << endl;
+    cout << "Ry: " << Ry << endl;
+    cout << "Rx: " << Rx << endl;
     return 0;
 }
