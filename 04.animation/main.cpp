@@ -10,10 +10,12 @@ using namespace arma;
 int main()
 {
     Animation an;
-    
+
     // punto a mover
-    Vertex P1(-0.34, 9.8, 0.0); 
-    Vertex P2(8.74, -34.1, -5.29);
+    Vertex P1(0, 0, 0); 
+    Vertex P2(10, 10, 10);
+
+    Vertex P3(5, 5, 5);
 
     // paso 1
 
@@ -31,18 +33,19 @@ int main()
                             { 0, (P2.get_y()-P1.get_y()) / D2, D1 / D2, 0},
                             { 0, 0, 0, 1} };
 
+    // paso 4
+    arma::Mat<float> Rz4 = an.Rz(180);
+
     // regresar
     arma::Mat<float> Rx5 = Rx3.i();
     arma::Mat<float> Ry6 = Ry2.i();
     arma::Mat<float> T7 = T1.i();
                             
-    arma::Mat<float> MC = T7 * Ry6 * Rx5 * Rx3 * Ry2 * T1;
+    arma::Mat<float> MC = T7 * Ry6 * Rx5 * Rz4 * Rx3 * Ry2 * T1;
 
-    arma::Mat<float> p1p = MC * P1.h();
-    arma::Mat<float> p2p = MC * P2.h();
+    arma::Mat<float> p1p = MC * v1.h();
 
     cout << p1p << endl;
-    cout << p2p << endl;
 
     return 0;
 }
