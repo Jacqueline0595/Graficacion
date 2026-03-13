@@ -94,17 +94,17 @@ arma::Mat<float> Animation::Rp1p2(Vertex P1, Vertex P2, float theta)
 
     // paso 2 
     float D1 = sqrt(powf(P2.get_z()-P1.get_z(), 2) + powf(P2.get_x()-P1.get_x(), 2));
-    arma::Mat<float> Ry2 = { { (P2.get_z()-P1.get_z()) / D1, 0, -(P2.get_x()-P1.get_x()) / D1, 0},
-                            { 0, 1, 0, 0},
-                            { (P2.get_x()-P1.get_x()) / D1, 0, (P2.get_z()-P1.get_z()) / D1, 0},
-                            { 0, 0, 0, 1} };
+    arma::Mat<float> Ry2 = { { (P2.get_z()-P1.get_z()) / D1, 0, -(P2.get_x()-P1.get_x()) / D1, 0 },
+                            { 0, 1, 0, 0 },
+                            { (P2.get_x()-P1.get_x()) / D1, 0, (P2.get_z()-P1.get_z()) / D1, 0 },
+                            { 0, 0, 0, 1 } };
                             
     // paso 3
     float D2 = sqrt( powf(P2.get_x()-P1.get_x(), 2) + powf(P2.get_y()-P1.get_y(), 2) + powf(P2.get_z()-P1.get_z(), 2) );
-    arma::Mat<float> Rx3 = { { 1, 0, 0, 0},
-                            { 0, D1/D2, -(P2.get_y()-P1.get_y()) / D2, 0},
-                            { 0, (P2.get_y()-P1.get_y()) / D2, D1 / D2, 0},
-                            { 0, 0, 0, 1} };
+    arma::Mat<float> Rx3 = { { 1, 0, 0, 0 },
+                            { 0, D1 / D2, -(P2.get_y()-P1.get_y()) / D2, 0 },
+                            { 0, (P2.get_y()-P1.get_y()) / D2, D1 / D2, 0 },
+                            { 0, 0, 0, 1 } };
 
     // paso 4: rotar 180 grados en z
     arma::Mat<float> Rz4 = this->Rz(theta);
