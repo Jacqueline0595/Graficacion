@@ -23,7 +23,7 @@ public:
     arma::Mat<float> Rx(float theta);
     arma::Mat<float> Ry(float theta);
     arma::Mat<float> Rz(float theta);
-    
+    arma::Mat<float> Rp1p2(Vertex P1, Vertex P2, float theta);
 private:
 
 };
