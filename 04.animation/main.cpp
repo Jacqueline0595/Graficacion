@@ -13,16 +13,19 @@ int main()
 
     // punto a mover
     Vertex P1(0, 0, 0); 
-    Vertex P2(10, 10, 10);
+    Vertex P2(0, 10, 0);
 
     // objeto
-    Vertex v1(3, 9, 5);
+    Vertex v1(0, 5, 5);
 
-    arma::Mat<float> mc = an.Rp1p2(P1, P2, 180);
-    arma::Mat<float> v1p = mc * v1.h();
+    for(float theta = 0.0; theta <= 360.0; theta += 5.0)
+    {
+        arma::Mat<float> mc = an.Rp1p2(P1, P2, theta);
 
-
-    cout << v1p << endl;
+        arma::Mat<float> v1p = mc * v1.h();
+        cout << "Angulo: " << theta << endl;
+        cout << v1p << endl;
+    }
 
     return 0;
 }
