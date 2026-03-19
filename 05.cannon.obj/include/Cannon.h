@@ -7,6 +7,7 @@
 #include "Obj.h"
 #include "Ply.h"
 #include "Vertex.h"
+#include "Animation.h"
 
 using namespace std;
 
@@ -20,12 +21,14 @@ public:
 
 private:
     Vertex position;
+    Vertex bullet_pos;
     float angel;
-    float force;
+    float force; 
     Obj body;
     Obj bullet;
     Ply l_wheel;
     Ply r_wheel;
+    vector<Vertex> b_trayectory;
 };
 
 #endif
