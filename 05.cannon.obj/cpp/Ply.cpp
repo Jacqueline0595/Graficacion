@@ -1,12 +1,13 @@
 #include "../include/Ply.h"
 
-Ply::Ply(string file_name):Model(file_name)
+Ply::Ply():Model()
 {
-    this->load();
+    // vacio
 }
 
-void Ply::load()
+void Ply::load(string file_name)
 {
+    this->file_name = file_name;
     this->vertices = {};
     this->faces = {};
 

@@ -10,10 +10,11 @@
 class Ply: public Model
 {
 public:
-    Ply(string file_name);
+    Ply();
+    void load(string file_name);
 
 private:
-    void load();
+    // 
 };
 
 #endif

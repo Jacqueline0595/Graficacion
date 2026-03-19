@@ -1,8 +1,8 @@
 #include "../include/Model.h"
     
-Model::Model(string file_name)
+Model::Model()
 {
-    this->file_name = file_name;
+    this->file_name = "";
 }
 
 vector<string> Model::split(string org_str, char delim)

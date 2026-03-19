@@ -14,18 +14,17 @@
 class Model
 {
 public:
-    Model(string file_name);
+    Model();
     void info();
-    
-    // reactivo 1
-    void printPolygons();
+    // pasar un parametro
+    virtual void load(string file_name) = 0;
+
 protected:
     vector<Vertex> vertices;
     vector<Face> faces;
     string name;
     string file_name;
     
-    virtual void load() = 0;
     vector<string> split(string org_str, char delim);
 };
 

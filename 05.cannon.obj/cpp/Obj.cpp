@@ -1,12 +1,13 @@
 #include "../include/Obj.h"
 
-Obj::Obj(string file_name):Model(file_name)
+Obj::Obj():Model()
 {
-    this->load();
+    // vacio (?)
 }
 
-void Obj::load()
+void Obj::load(string file_name)
 {
+    this->file_name = file_name;
     this->vertices = {};
     this->faces = {};
 
