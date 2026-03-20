@@ -20,8 +20,6 @@ Cannon::Cannon(float x, float y, float z)
     this->r_wheel.load("models/r_wheel.ply");
 
     this->b_trayectory = {};
-
-    // Ciclo para mover la bala a traves de la trayectoria curva
 }
 
 void Cannon::shoot()
@@ -38,7 +36,26 @@ void Cannon::shoot()
     Vertex P4( bullet_pos.get_x() + (this->force * 3), 
                 0,
                 bullet_pos.get_z() );
+
     this->b_trayectory = an.bezier(P1, P2, P3, P4, 0.1);
+
+    // Ciclo para mover la bala a traves de la trayectoria curva
+    for(Vertex bt : this->b_trayectory)
+    {
+        vector<Vertex> tb_vertices = {};
+        arma::Mat<float> T1 = an.T(bt.get_x(), bt.get_y(), bt.get_z());
+        // recorrer los vertices de la bala
+        for(Vertex v : this->bullet.get_vertices())
+        {
+            arma::Col<float> vt = T1 * v.h();
+            Vertex vtp( vt.at(0,0)/vt.at(3,0), vt.at(1,0)/vt.at(3,0), vt.at(2,0)/vt.at(3,0) );
+            tb_vertices.push_back(vtp);
+        }
+        cout << endl;
+        // Dibujar la bala
+        // Recorrer cada cara de la bala y dibujarla
+    }
+
 }
 
 void Cannon::set_angel(float inc)

@@ -14,10 +14,12 @@
 class Model
 {
 public:
+    // Model() = {};
     Model();
     void info();
     // pasar un parametro
     virtual void load(string file_name) = 0;
+    vector<Vertex> get_vertices();
 
 protected:
     vector<Vertex> vertices;

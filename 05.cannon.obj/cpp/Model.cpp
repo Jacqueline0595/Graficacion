@@ -33,3 +33,8 @@ void Model::info()
     cout << "Numero de vertices: " << this->vertices.size() << endl;
     cout << "Numero de caras: " << this->faces.size() << endl;
 }
+
+vector<Vertex> Model::get_vertices()
+{
+    return(this->vertices);
+}
