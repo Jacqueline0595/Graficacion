@@ -5,15 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run main",
+            "name": "Debug OpenGL",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/main.exe",
             "args": [],
             "cwd": "${workspaceFolder}",
-            "preLaunchTask": "build",
+            "stopAtEntry": false,
+            "externalConsole": true,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:/msys64/mingw64/bin/gdb.exe"
+            "miDebuggerPath": "C:/msys64/mingw64/bin/gdb.exe",
+            "preLaunchTask": "build"
         }
     ]
 }
