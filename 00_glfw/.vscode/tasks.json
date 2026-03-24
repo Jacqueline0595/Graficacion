@@ -1,0 +1,52 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "cppbuild",
+      "label": "build",
+      "command": "C:/msys64/mingw64/bin/g++.exe",
+      "args": [
+        "-fdiagnostics-color=always",
+        "-g",
+
+        "main.cpp",
+        "cpp/*.cpp",
+
+        "-I",
+        "include",
+        "-IC:/msys64/mingw64/include",
+
+        "-LC:/msys64/mingw64/lib",
+
+        "-larmadillo",
+        "-lopenblas",
+        "-lglfw3",
+        "-lglew32",
+        "-lglu32",
+        "-lopengl32",
+        "-lgdi32",
+        "-luser32",
+        "-lkernel32",
+
+        "-o",
+        "main.exe"
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+    },
+    {
+      "type": "process",
+      "label": "run",
+      "command": "main.exe",
+      "dependsOn": "build"
+    }
+  ]
+}
