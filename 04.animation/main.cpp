@@ -13,10 +13,10 @@ int main()
 
     // punto a mover
     Vertex P1(0, 0, 0); 
-    Vertex P2(0, 10, 0);
+    Vertex P2(10, 10, 10);
 
     // objeto
-    Vertex v1(0, 5, 5);
+    Vertex v1(3, 9, 5);
 
     for(float theta = 0.0; theta <= 360.0; theta += 5.0)
     {
