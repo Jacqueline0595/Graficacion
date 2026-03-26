@@ -15,7 +15,7 @@ public:
 private:
     OpenGL gl;
     unsigned int object_1;
-    // unsigned int object_2;
+    unsigned int object_2;
 
     static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 };

@@ -8,6 +8,8 @@ Ejemplo::Ejemplo()
 
     this->object_1 = this->gl.create_object({-1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, -0.5f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.5f, 0.0f, 0.0f},
                  {0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f});
+    this->object_2 = this->gl.create_object({-0.5f, 0.0f, 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f},
+                 {0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f});
 }
 
 void Ejemplo::main_loop()
@@ -16,6 +18,7 @@ void Ejemplo::main_loop()
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
         this->gl.draw_object( this->object_1 );
+        this->gl.draw_object( this->object_2 );
 
     } while ( !this->gl.should_close() );
 }
