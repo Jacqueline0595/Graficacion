@@ -15,11 +15,34 @@ Cannon::Cannon(float x, float y, float z)
     this->force = 1.0;
 
     this->body.load("models/body.obj");
+    this->body.set_color(1.0f, 0.0f, 0.0f);
     this->bullet.load("models/bullet.obj");
     this->l_wheel.load("models/l_wheel.ply");
     this->r_wheel.load("models/r_wheel.ply");
 
     this->b_trayectory = {};
+
+    // crear la ventana
+    this->gl.createWindow( 800, 600, "Cannon" );
+    this->gl.setKeyCallBack(this->key_callback);
+
+    // color del fondo
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+    unsigned int object_b = this->gl.create_object(this->body.get_vertex_buffer_data(),
+                this->body.get_color_buffer_data());
+
+    this->body.set_object(object_b);
+}
+
+void Cannon::main_loop()
+{
+    do {
+        glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+        this->gl.draw_object( this->body.get_object() );
+
+    } while ( !this->gl.should_close() );
 }
 
 void Cannon::shoot()
@@ -76,4 +99,12 @@ void Cannon::set_force(float inc)
         this->force = 3;
      else if(this->force < 0.1)
         this->force = 0.1;
+}
+
+void Cannon::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+        cout << "Barra espaciadora" << endl;
+    if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+        cout << "Tecla arriba" << endl;
 }

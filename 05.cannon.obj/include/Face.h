@@ -9,12 +9,11 @@ using namespace std;
 
 class Face
 {
-private:
-    vector<unsigned int> vindex;
 public:
     Face(vector<unsigned int> vindex);
-    // reactivo 1
-    void printPoly();
+    vector<unsigned int> get_indices();
+private:
+    vector<unsigned int> vindex;
 };
 
 #endif

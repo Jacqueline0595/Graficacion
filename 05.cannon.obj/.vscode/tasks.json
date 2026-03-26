@@ -6,17 +6,30 @@
       "type": "shell",
       "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
       "args": [
+        "-fdiagnostics-color=always",
         "-g",
+
         "-O2",
         "main.cpp",
         "cpp/*.cpp",
+
         "-I",
         "include",
         "-IC:/msys64/mingw64/include",
         "-LC:/msys64/mingw64/lib",
+
         "-DARMA_DONT_USE_WRAPPER",
+
         "-larmadillo",
         "-lopenblas",
+        "-lglfw3",
+        "-lglew32",
+        "-lglu32",
+        "-lopengl32",
+        "-lgdi32",
+        "-luser32",
+        "-lkernel32",
+
         "-o",
         "main.exe"
       ],
