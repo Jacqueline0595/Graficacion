@@ -17,8 +17,11 @@ Cannon::Cannon(float x, float y, float z)
     this->body.load("models/body.obj");
     this->body.set_color(1.0f, 0.0f, 0.0f);
     this->bullet.load("models/bullet.obj");
+    this->bullet.set_color(0.0f, 0.0f, 1.0f);
     this->l_wheel.load("models/l_wheel.ply");
+    this->l_wheel.set_color(0.0f, 1.0f, 0.0f);
     this->r_wheel.load("models/r_wheel.ply");
+    this->r_wheel.set_color(1.0f, 1.0f, 0.0f);
 
     this->b_trayectory = {};
 
@@ -33,6 +36,21 @@ Cannon::Cannon(float x, float y, float z)
                 this->body.get_color_buffer_data());
 
     this->body.set_object(object_b);
+
+    unsigned int object_bl = this->gl.create_object(this->bullet.get_vertex_buffer_data(),
+                this->bullet.get_color_buffer_data());
+
+    this->bullet.set_object(object_bl);
+
+    unsigned int object_l_wheel = this->gl.create_object(this->l_wheel.get_vertex_buffer_data(),
+                this->l_wheel.get_color_buffer_data());
+
+    this->l_wheel.set_object(object_l_wheel);
+
+    unsigned int object_r_wheel = this->gl.create_object(this->r_wheel.get_vertex_buffer_data(),
+                this->r_wheel.get_color_buffer_data());
+
+    this->r_wheel.set_object(object_r_wheel);
 }
 
 void Cannon::main_loop()
@@ -41,6 +59,9 @@ void Cannon::main_loop()
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
         this->gl.draw_object( this->body.get_object() );
+        this->gl.draw_object( this->bullet.get_object() );
+        this->gl.draw_object( this->l_wheel.get_object() );
+        this->gl.draw_object( this->r_wheel.get_object() );
 
     } while ( !this->gl.should_close() );
 }
@@ -104,7 +125,13 @@ void Cannon::set_force(float inc)
 void Cannon::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
-        cout << "Barra espaciadora" << endl;
+        cout << "Disparar el cañon" << endl;
     if (key == GLFW_KEY_UP && action == GLFW_PRESS)
-        cout << "Tecla arriba" << endl;
+        cout << "Aumentar el ángulo" << endl;
+    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+        cout << "Disminuir el ángulo" << endl;
+    if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
+        cout << "Disminuir la fuerza" << endl;
+    if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
+        cout << "Aumentar la fuerza" << endl;
 }
