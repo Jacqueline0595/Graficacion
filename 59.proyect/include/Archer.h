@@ -23,15 +23,22 @@ public:
 
 private:
     OpenGL gl;
+
     Vertex position;
     Vertex arrow_pos;
+
     float angel;
     float force; 
+
+    // Modelos Obj
     Obj upperBody;
     Obj lowerBody;
     Obj target;
+
+    // Modelos Ply
     Ply bow;
     Ply arrow;
+
     vector<Vertex> arrow_trayectory;
 
     static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
