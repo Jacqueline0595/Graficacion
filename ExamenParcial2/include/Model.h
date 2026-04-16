@@ -10,7 +10,6 @@
 #include "Vertex.h"
 #include "Face.h"
 #include <vector>
-#include "OpenGL.h"
 
 class Model
 {
@@ -24,8 +23,6 @@ public:
     unsigned int get_object();
     void set_object(unsigned int object);
     void set_color(float r, float g, float b);
-    vector <GLfloat> get_vertex_buffer_data();
-    vector <GLfloat> get_color_buffer_data();
 
 protected:
     vector<Vertex> vertices;

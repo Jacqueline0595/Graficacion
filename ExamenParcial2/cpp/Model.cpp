@@ -58,34 +58,3 @@ void Model::set_color(float r, float g, float b)
     this->g = g;
     this->b = b;
 }
-
-vector <GLfloat> Model::get_vertex_buffer_data()
-{
-    vector <GLfloat>buffer_data = {};
-    for(Face f: this->faces)
-    {
-        for(unsigned int vi: f.get_indices())
-        {
-            Vertex v = this->vertices[vi];
-            buffer_data.push_back(v.get_x());
-            buffer_data.push_back(v.get_y());
-            buffer_data.push_back(v.get_z());
-        }
-    }
-    return(buffer_data);
-}
-
-vector <GLfloat> Model::get_color_buffer_data()
-{
-    vector <GLfloat>color_data = {};
-    for(Face f: this->faces)
-    {
-        for(unsigned int vi: f.get_indices())
-        {
-            color_data.push_back(this->r);
-            color_data.push_back(this->g);
-            color_data.push_back(this->b);
-        }
-    }
-    return(color_data);
-}
