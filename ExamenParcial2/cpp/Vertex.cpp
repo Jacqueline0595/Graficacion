@@ -66,3 +66,12 @@ arma::Col<float> Vertex::h()
     arma::Col<float> ch = {this->x, this->y, this->z, 1};
     return(ch);
 }
+
+Vertex Vertex::homoToEsp(arma::Col<float> P, float w)
+{
+    Vertex P1;
+    P1.set_x(P(0) / w);
+    P1.set_y(P(1) / w);
+    P1.set_z(P(2) / w);
+    return(P1);
+}

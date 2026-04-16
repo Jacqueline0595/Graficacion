@@ -24,6 +24,7 @@ public:
     void set_z(float z);
 
     arma::Col<float> h();
+    Vertex homoToEsp(arma::Col<float> P, float w);
 };
 
 #endif
