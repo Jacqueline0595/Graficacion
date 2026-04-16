@@ -118,29 +118,3 @@ arma::Mat<float> Animation::Rp1p2(Vertex P1, Vertex P2, float theta)
 
     return (MC);
 }
-
-vector<Vertex> Animation::homoToEsp(Vertex homo, float w)
-{
-    Vertex espacial = {};
-    
-    if(w != 0)
-    {
-        espacial.set_x(homo.get_x() / w);
-        espacial.set_y(homo.get_y() / w);
-        espacial.set_z(homo.get_z() / w);
-    }
-    return vector<Vertex> { espacial };
-}
-
-vector<Vertex> Animation::EspToHomo(Vertex espacial, float w)
-{
-    Vertex homo;
-
-    if(w != 0)
-    {
-        homo.set_x(espacial.get_x() * w);
-        homo.set_y(espacial.get_y() * w);
-        homo.set_z(espacial.get_z() * w);
-    }
-    return vector<Vertex> { homo };
-}

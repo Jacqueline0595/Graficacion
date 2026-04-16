@@ -24,8 +24,6 @@ public:
     arma::Mat<float> Ry(float theta);
     arma::Mat<float> Rz(float theta);
     arma::Mat<float> Rp1p2(Vertex P1, Vertex P2, float theta);
-    vector<Vertex> homoToEsp(Vertex homo, float w);
-    vector<Vertex> EspToHomo(Vertex espacial, float w);
 private:
 
 };
