@@ -24,6 +24,8 @@ public:
     void set_z(float z);
 
     arma::Col<float> h();
+    // Tiene mas sentido hacerlo desde aqui para mi 
+    arma::Col<float> EspToHomogenous(float w);
     Vertex homoToEsp(arma::Col<float> P, float w);
 };
 

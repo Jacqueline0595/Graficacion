@@ -67,11 +67,28 @@ arma::Col<float> Vertex::h()
     return(ch);
 }
 
+// Es casi la misma, solo que aqui se pasa el valor de la w
+arma::Col<float> Vertex::EspToHomogenous(float w)
+{
+    arma::Col<float> homo = {};
+
+    // Con una validacion por si acaso
+    if(w > 0)
+        homo = {this->x, this->y, this->z, w};
+
+    return(homo);
+}
+
 Vertex Vertex::homoToEsp(arma::Col<float> P, float w)
 {
-    Vertex P1;
-    P1.set_x(P(0) / w);
-    P1.set_y(P(1) / w);
-    P1.set_z(P(2) / w);
+    Vertex P1 = {};
+
+    if(w > 0)
+    {
+        P1.set_x(P(0) / w);
+        P1.set_y(P(1) / w);
+        P1.set_z(P(2) / w);
+    }
+
     return(P1);
 }
