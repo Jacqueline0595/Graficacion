@@ -18,7 +18,7 @@ int main()
     // objeto
     Vertex v1(3, 9, 5);
 
-    for(float theta = 0.0; theta <= 360.0; theta += 5.0)
+    for(float theta = 0.0; theta <= 50.0; theta += 5.0)
     {
         arma::Mat<float> mc = an.Rp1p2(P1, P2, theta);
 
@@ -27,5 +27,6 @@ int main()
         cout << v1p << endl;
     }
 
+    cin.get();
     return 0;
 }
