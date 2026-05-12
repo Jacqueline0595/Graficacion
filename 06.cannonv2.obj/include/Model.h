@@ -28,7 +28,7 @@ public:
     vector <GLfloat> get_vertex_buffer_data();
     vector <GLfloat> get_color_buffer_data();
     vector <GLfloat> get_normal_buffer_data();
-    glm::mat4 get_mmodel_matrix();
+    glm::mat4 get_mmodel();
     void set_mmodel(arma::Mat<float> transform);
 
 protected:

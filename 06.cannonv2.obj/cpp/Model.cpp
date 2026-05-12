@@ -94,7 +94,23 @@ vector <GLfloat> Model::get_color_buffer_data()
     return(color_data);
 }
 
-glm::mat4 Model::get_mmodel_matrix()
+vector <GLfloat> Model::get_normal_buffer_data()
+{
+    vector<GLfloat> normal_data = {};
+    for(Face f: this->faces)
+    {
+        for(unsigned int vi: f.get_indices())
+        {
+            Vertex v = this->vertices[vi];
+            normal_data.push_back(v.get_nx());
+            normal_data.push_back(v.get_ny());
+            normal_data.push_back(v.get_nz());
+        }
+    }
+    return(normal_data);
+}
+
+glm::mat4 Model::get_mmodel()
 {
     return(this->Mmodel);
 }

@@ -90,10 +90,10 @@ void Cannon::main_loop()
             this->bullet.set_mmodel(T1);
         }
 
-        this->gl.draw_object( this->body.get_object(), this->Projection * this->View * this->body.get_mmodel_matrix() );
-        this->gl.draw_object( this->bullet.get_object(), this->Projection * this->View * this->bullet.get_mmodel_matrix() );
-        this->gl.draw_object( this->l_wheel.get_object(), this->Projection * this->View * this->l_wheel.get_mmodel_matrix() );
-        this->gl.draw_object( this->r_wheel.get_object(), this->Projection * this->View * this->r_wheel.get_mmodel_matrix() );
+        this->gl.draw_object( this->body.get_object(), this->Projection * this->View * this->body.get_mmodel() );
+        this->gl.draw_object( this->bullet.get_object(), this->Projection * this->View * this->bullet.get_mmodel() );
+        this->gl.draw_object( this->l_wheel.get_object(), this->Projection * this->View * this->l_wheel.get_mmodel() );
+        this->gl.draw_object( this->r_wheel.get_object(), this->Projection * this->View * this->r_wheel.get_mmodel() );
 
     } while ( !this->gl.should_close() );
 }
