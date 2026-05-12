@@ -4,7 +4,7 @@
     {
       "label": "build",
       "type": "shell",
-      "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+      "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
       "args": [
         "-fdiagnostics-color=always",
         "-g",
@@ -15,8 +15,8 @@
 
         "-I",
         "include",
-        "-IC:/msys64/mingw64/include",
-        "-LC:/msys64/mingw64/lib",
+        "-IC:/msys64/ucrt64/include",
+        "-LC:/msys64/ucrt64/lib",
 
         "-DARMA_DONT_USE_WRAPPER",
 

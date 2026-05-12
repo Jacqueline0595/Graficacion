@@ -7,7 +7,7 @@
 class Vertex
 {
 private:
-    float x, y, z;
+    float x, y, z, w;
 public:
     Vertex() {};
     Vertex(float x, float y, float z); 

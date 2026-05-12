@@ -32,6 +32,8 @@ private:
     Ply l_wheel;
     Ply r_wheel;
     vector<Vertex> b_trayectory;
+    glm::mat4 View;
+    glm::mat4 Projection;
 
     static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 };

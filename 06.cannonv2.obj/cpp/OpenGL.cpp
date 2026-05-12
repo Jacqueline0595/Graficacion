@@ -31,8 +31,14 @@ void OpenGL::createWindow(long width, long height, std::string title)
     }
 	glfwSetInputMode(this->window, GLFW_STICKY_KEYS, GLFW_TRUE);
 
-    this->programID = loadShaders( "shaders/SimpleVertexShader.vertexshader", "shaders/SimpleFragmentShader.fragmentshader" );
+    this->programID = loadShaders( "shaders/MPVVertexShader.vertexshader", "shaders/MPVFragmentShader.fragmentshader" );
     glUseProgram(this->programID);
+
+	// Enable depth test
+	glEnable(GL_DEPTH_TEST);
+	// Accept fragment if it closer to the camera than the former one
+	glDepthFunc(GL_LESS);
+
 }
 
 void OpenGL::setKeyCallBack(GLFWkeyfun callback)
@@ -128,11 +134,12 @@ GLuint OpenGL::loadShaders(const char * vertex_file_path,const char * fragment_f
 	return ProgramID;
 }
 
-unsigned int OpenGL::create_object(vector <GLfloat> vertex_buffer_data, vector <GLfloat> color_buffer_data)
+unsigned int OpenGL::create_object(vector <GLfloat> vertex_buffer_data, vector <GLfloat> color_buffer_data, vector <GLfloat> normal_buffer_data)
 {
 	unsigned int object_id = this->vertexbuffer.size();
 	this->vertexbuffer.push_back(0);
 	this->colorbuffer.push_back(0);
+	this->normalbuffer.push_back(0);
 	this->datasize.push_back(0);
 	
     GLuint VertexArrayID;
@@ -148,11 +155,17 @@ unsigned int OpenGL::create_object(vector <GLfloat> vertex_buffer_data, vector <
 	glBindBuffer(GL_ARRAY_BUFFER, this->colorbuffer[object_id]);
 	glBufferData(GL_ARRAY_BUFFER, color_buffer_data.size()*sizeof(GLfloat), &color_buffer_data[0], GL_STATIC_DRAW);
 
+	glGenBuffers(1, &this->normalbuffer[object_id]);
+	glBindBuffer(GL_ARRAY_BUFFER, this->normalbuffer[object_id]);
+	glBufferData(GL_ARRAY_BUFFER, normal_buffer_data.size() * sizeof(glm::vec3), &normal_buffer_data[0], GL_STATIC_DRAW);
 	return (object_id);
 }
 
-void OpenGL::draw_object(unsigned int object_id)
+void OpenGL::draw_object(unsigned int object_id, glm::mat4 mvp)
 {
+	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
+    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
+
     // 1st attribute buffer : vertices
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, this->vertexbuffer[object_id]);
@@ -175,6 +188,18 @@ void OpenGL::draw_object(unsigned int object_id)
 		0,                                // stride
 		(void*)0                          // array buffer offset
 	);
+	// 3rd attribute buffer : normals
+	glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, this->normalbuffer[object_id]);
+	glVertexAttribPointer(
+		2,                                // attribute
+		3,                                // size
+		GL_FLOAT,                         // type
+		GL_FALSE,                         // normalized?
+		0,                                // stride
+		(void*)0                          // array buffer offset
+	);
+	
     // Draw the triangle !
     glDrawArrays(GL_TRIANGLES, 0, this->datasize[object_id]); // Starting from vertex 0; 3 vertices total -> 1 triangle
     glDisableVertexAttribArray(0);

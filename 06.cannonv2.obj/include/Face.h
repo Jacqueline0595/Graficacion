@@ -1,9 +1,8 @@
 #ifndef FACE_H
 #define FACE_H
+#include <vector>
 
 #pragma once
-
-#include <vector>
 
 using namespace std;
 

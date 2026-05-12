@@ -89,3 +89,8 @@ vector <GLfloat> Model::get_color_buffer_data()
     }
     return(color_data);
 }
+
+glm::mat4 Model:get_model()
+{
+  return(this->);
+}

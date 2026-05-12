@@ -16,12 +16,21 @@ Cannon::Cannon(float x, float y, float z)
 
     this->body.load("models/body.obj");
     this->body.set_color(1.0f, 0.0f, 0.0f);
+    cout << "Body vertices: " << this->body.get_vertices().size() << endl;
+    cout << "Body faces: " << this->body.get_faces().size() << endl;
+
     this->bullet.load("models/bullet.obj");
     this->bullet.set_color(0.0f, 0.0f, 1.0f);
+    cout << "Bullet vertices: " << this->bullet.get_vertices().size() << endl;
+
     this->l_wheel.load("models/l_wheel.ply");
     this->l_wheel.set_color(0.0f, 1.0f, 0.0f);
+    cout << "L_Wheel vertices: " << this->l_wheel.get_vertices().size() << endl;
+
     this->r_wheel.load("models/r_wheel.ply");
     this->r_wheel.set_color(1.0f, 1.0f, 0.0f);
+    cout << "R_Wheel vertices: " << this->r_wheel.get_vertices().size() << endl;
+
 
     this->b_trayectory = {};
 
@@ -51,6 +60,15 @@ Cannon::Cannon(float x, float y, float z)
                 this->r_wheel.get_color_buffer_data());
 
     this->r_wheel.set_object(object_r_wheel);
+
+    this->View = glm::lookAt(
+        glm::vec3(0, 0, 5), // Camera is at (0,0,5), in World Space
+        glm::vec3(0, 0, 0), // and looks at the origin
+        glm::vec3(0, 1, 0)  // Head is up (set to 0,-1,0 to look upside-down)
+    );
+
+    // this->Projection = glm::perspective(glm::radians(45.0f), 1024.0f/768.0f, 0.1f, 100.0f);
+    this->Projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f , 0.1f, 100.0f);
 }
 
 void Cannon::main_loop()
@@ -58,10 +76,12 @@ void Cannon::main_loop()
     do {
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-        this->gl.draw_object( this->body.get_object() );
+        glm::mat4 mvp = this->Projection * this->View * this->body.get_model_matrix();
+        this->gl.draw_object( this->body.get_object(), mvp );
+        /* this->gl.draw_object( this->body.get_object() );
         this->gl.draw_object( this->bullet.get_object() );
         this->gl.draw_object( this->l_wheel.get_object() );
-        this->gl.draw_object( this->r_wheel.get_object() );
+        this->gl.draw_object( this->r_wheel.get_object() ); */
 
     } while ( !this->gl.should_close() );
 }
@@ -70,10 +90,10 @@ void Cannon::shoot()
 {
     Animation an;
     Vertex P1 = bullet_pos;
-    float rangle = this->angel * M_PI / 180.0; // Convertir a radianes
+    float rangle = this->angel + M_PI / 180.0; // Convertir a radianes
     Vertex P2( bullet_pos.get_x() + this->force, 
                 bullet_pos.get_y() +(1 - cos(rangle)), 
-                bullet_pos.get_z());
+                bullet_pos.get_z() );
     Vertex P3( bullet_pos.get_x() + (this->force * 2), 
                 P2.get_y(),
                 bullet_pos.get_z() );
