@@ -21,7 +21,6 @@ public:
     void info();
     virtual void load(string file_name) = 0;
     vector<Vertex> get_vertices();
-    vector<Face> get_faces();
     unsigned int get_object();
     void set_object(unsigned int object);
     void set_color(float r, float g, float b);

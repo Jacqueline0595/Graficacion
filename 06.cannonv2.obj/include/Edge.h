@@ -10,11 +10,11 @@ class Edge
 {
 public:
     Vertex vi, ve;
-
-private:
     Edge(Vertex vi, Vertex ve);
     void print();
 
+private:
+    
 };
 
 #endif

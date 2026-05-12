@@ -84,8 +84,6 @@ void Cannon::main_loop()
             else
                 this->shooted = false; // Detener el movimiento de la bala cuando alcance el final de la trayectoria
 
-            this->b_index++;
-
             arma::Mat<float> T1 = an.T(bt.get_x(), bt.get_y(), bt.get_z());
             this->bullet.set_mmodel(T1);
         }
@@ -103,7 +101,7 @@ void Cannon::shoot()
     Animation an;
 
     Vertex P1 = bullet_pos;
-    float rangle = this->angel + M_PI / 180.0; // Convertir a radianes
+    float rangle = this->angel * M_PI / 180.0; // Convertir a radianes
     Vertex P2( bullet_pos.get_x() + this->force, 
                 bullet_pos.get_y() +(1 - cos(rangle)), 
                 bullet_pos.get_z() );
