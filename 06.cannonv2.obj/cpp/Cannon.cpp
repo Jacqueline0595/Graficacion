@@ -77,15 +77,18 @@ void Cannon::main_loop()
 
         if(this->shooted)
         {
-            // Ciclo para mover la bala a traves de la trayectoria curva
-            Vertex bt = this->b_trayectory[this->b_index];
             if (this->b_index < this->b_trayectory.size())
+            {
+                Vertex bt = this->b_trayectory[this->b_index];
+                arma::Mat<float> T1 = an.T(bt.get_x(), bt.get_y(), bt.get_z());
+                this->bullet.set_mmodel(T1);
                 this->b_index++;
+            }
             else
-                this->shooted = false; // Detener el movimiento de la bala cuando alcance el final de la trayectoria
-
-            arma::Mat<float> T1 = an.T(bt.get_x(), bt.get_y(), bt.get_z());
-            this->bullet.set_mmodel(T1);
+            {
+                this->shooted = false;
+                this->b_index = 0;
+            }
         }
 
         this->gl.draw_object( this->body.get_object(), this->Projection * this->View * this->body.get_mmodel() );

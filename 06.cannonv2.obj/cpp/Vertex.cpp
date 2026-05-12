@@ -88,17 +88,17 @@ float Vertex::get_nz()
 
 void Vertex::set_nx(float nx)
 {
-    this->nx += nx;
+    this->nx = nx;
 }
 
 void Vertex::set_ny(float ny)
 {
-    this->ny += ny;
+    this->ny = ny;
 }
 
 void Vertex::set_nz(float nz)
 {
-    this->nz += nz;
+    this->nz = nz;
 }
 
 void Vertex::normal_average()
