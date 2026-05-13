@@ -4,6 +4,8 @@
 #pragma once
 #include <armadillo>
 
+using namespace std;
+
 class Vertex
 {
 private:

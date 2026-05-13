@@ -6,6 +6,8 @@
 #include "Model.h"
 #include <vector>
 
+using namespace std;
+
 class Ply: public Model
 {
 public:

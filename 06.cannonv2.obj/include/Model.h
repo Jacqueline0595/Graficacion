@@ -14,6 +14,8 @@
 #include "Face.h"
 #include "OpenGL.h"
 
+using namespace std;
+
 class Model
 {
 public:
