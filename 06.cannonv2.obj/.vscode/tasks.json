@@ -2,16 +2,24 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "type": "cppbuild",
             "label": "build",
+            "type": "process",
             "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
             "args": [
-                "-fdiagnostics-color=always",
+                "-fdiagnostics-color=never",
                 "-g",
                 "-O2",
-                "${workspaceFolder}\\main.cpp",
-                "${workspaceFolder}\\cpp\\*.cpp",
-                "-I", "${workspaceFolder}\\include",
+                "main.cpp",
+                "cpp/Animation.cpp",
+                "cpp/Cannon.cpp",
+                "cpp/Edge.cpp",
+                "cpp/Face.cpp",
+                "cpp/Model.cpp",
+                "cpp/Obj.cpp",
+                "cpp/OpenGL.cpp",
+                "cpp/Ply.cpp",
+                "cpp/Vertex.cpp",
+                "-I", "include",
                 "-IC:/msys64/ucrt64/include",
                 "-LC:/msys64/ucrt64/lib",
                 "-DARMA_DONT_USE_WRAPPER",
@@ -25,7 +33,7 @@
                 "-luser32",
                 "-lkernel32",
                 "-o",
-                "${workspaceFolder}\\main.exe"
+                "main.exe"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -36,7 +44,18 @@
                 "panel": "shared",
                 "clear": true
             },
-            "problemMatcher": ["$gcc"],
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": ["relative", "${workspaceFolder}"],
+                "pattern": {
+                    "regexp": "^(.+):(\\d+):(\\d+):\\s+(warning|error|note):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
