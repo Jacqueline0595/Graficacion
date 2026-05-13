@@ -6,12 +6,9 @@
             "type": "shell",
             "command": "C:\\msys64\\usr\\bin\\bash.exe",
             "args": [
-                "-c",
-                "cd '${workspaceFolder}' && C:/msys64/ucrt64/bin/g++ -fdiagnostics-color=never -g -O2 main.cpp cpp/*.cpp -I include -IC:/msys64/ucrt64/include -LC:/msys64/ucrt64/lib -DARMA_DONT_USE_WRAPPER -larmadillo -lopenblas -lglfw3 -lglew32 -lglu32 -lopengl32 -lgdi32 -luser32 -lkernel32 -o main.exe 2>&1"
+                "-lc",
+                "cd /c/Graficacion/06.cannonv2.obj && g++ -fdiagnostics-color=never -g -O2 main.cpp cpp/*.cpp -I include -IC:/msys64/ucrt64/include -LC:/msys64/ucrt64/lib -DARMA_DONT_USE_WRAPPER -larmadillo -lopenblas -lglfw3 -lglew32 -lglu32 -lopengl32 -lgdi32 -luser32 -lkernel32 -o main.exe 2>&1"
             ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": true,
