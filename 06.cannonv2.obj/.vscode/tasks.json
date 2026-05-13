@@ -2,31 +2,41 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "type": "cppbuild",
             "label": "build",
-            "type": "shell",
-            "command": "C:\\msys64\\usr\\bin\\bash.exe",
+            "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
             "args": [
-                "-c",
-                "cd /c/Graficacion/06.cannonv2.obj && /c/msys64/ucrt64/bin/g++ -fdiagnostics-color=never -g -O2 main.cpp cpp/*.cpp -I include -IC:/msys64/ucrt64/include -LC:/msys64/ucrt64/lib -DARMA_DONT_USE_WRAPPER -larmadillo -lopenblas -lglfw3 -lglew32 -lglu32 -lopengl32 -lgdi32 -luser32 -lkernel32 -o main.exe 2>&1"
+                "-fdiagnostics-color=always",
+                "-g",
+                "-O2",
+                "${workspaceFolder}\\main.cpp",
+                "${workspaceFolder}\\cpp\\*.cpp",
+                "-I", "${workspaceFolder}\\include",
+                "-IC:/msys64/ucrt64/include",
+                "-LC:/msys64/ucrt64/lib",
+                "-DARMA_DONT_USE_WRAPPER",
+                "-larmadillo",
+                "-lopenblas",
+                "-lglfw3",
+                "-lglew32",
+                "-lglu32",
+                "-lopengl32",
+                "-lgdi32",
+                "-luser32",
+                "-lkernel32",
+                "-o",
+                "${workspaceFolder}\\main.exe"
             ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
             "presentation": {
                 "reveal": "always",
                 "focus": true,
                 "panel": "shared",
                 "clear": true
             },
-            "problemMatcher": {
-                "owner": "cpp",
-                "fileLocation": ["relative", "${workspaceFolder}"],
-                "pattern": {
-                    "regexp": "^(.+):(\\d+):(\\d+):\\s+(warning|error|note):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
-            },
+            "problemMatcher": ["$gcc"],
             "group": {
                 "kind": "build",
                 "isDefault": true
