@@ -11,9 +11,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
         my_cannon.shoot();
     if (key == GLFW_KEY_UP && action == GLFW_PRESS)
-        my_cannon.set_angel(+5.0);
+        my_cannon.set_angle(+5.0);
     if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
-        my_cannon.set_angel(-5.0);
+        my_cannon.set_angle(-5.0);
     if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
         cout << "Disminuir la fuerza" << endl;
     if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
@@ -52,8 +52,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 int main()
 {
-    my_cannon.set_angel(0);
+    my_cannon.set_angle(0);
     my_cannon.set_force(0.5);
+    
     my_cannon.main_loop();
     
     /* 

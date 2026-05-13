@@ -40,7 +40,7 @@ void Obj::load(string file_name)
 
         if(!elements.empty())
         {
-            if (elements[0] == "o")
+            if(elements[0] == "v")
             {
                 float x = stof(elements[1]);
                 float y = stof(elements[2]);
@@ -49,15 +49,6 @@ void Obj::load(string file_name)
                 Vertex v(x, y, z);
                 this->vertices.push_back(v);
             }
-            else if(elements[0] == "v")
-            {
-                float x = stof(elements[1]);
-                float y = stof(elements[2]);
-                float z = stof(elements[3]);
-
-                Vertex v(x, y, z);
-                vertices.push_back(v);
-            }
             else if(elements[0] == "vn")
             {
                 float nx = stof(elements[1]);
@@ -65,7 +56,7 @@ void Obj::load(string file_name)
                 float nz = stof(elements[3]);
 
                 Vertex n(nx, ny, nz);
-                vertices.push_back(n);
+                normals.push_back(n);
             }
             else if(elements[0] == "f")
             {

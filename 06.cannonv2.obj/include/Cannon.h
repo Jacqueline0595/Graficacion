@@ -17,7 +17,7 @@ class Cannon
 public:
     Cannon(float x, float y, float z, GLFWkeyfun callback);
     void shoot();
-    void set_angel(float inc);
+    void set_angle(float inc);
     void set_force(float inc);
     void main_loop();
     void set_view(glm::mat4 view);
@@ -26,7 +26,7 @@ private:
     OpenGL gl;
     Vertex position;
     Vertex bullet_pos;
-    float angel;
+    float angle;
     float force; 
     Obj body;
     Obj bullet;

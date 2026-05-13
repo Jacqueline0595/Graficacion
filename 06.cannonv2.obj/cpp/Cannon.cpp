@@ -11,7 +11,7 @@ Cannon::Cannon(float x, float y, float z, GLFWkeyfun callback)
     this->bullet_pos.set_y(y + 0.1);
     this->bullet_pos.set_z(z);
 
-    this->angel = 0.0; 
+    this->angle = 0.0; 
     this->force = 1.0;
     this->shooted = false;
 
@@ -104,7 +104,7 @@ void Cannon::shoot()
     Animation an;
 
     Vertex P1 = bullet_pos;
-    float rangle = this->angel * M_PI / 180.0; // Convertir a radianes
+    float rangle = this->angle * M_PI / 180.0; // Convertir a radianes
     Vertex P2( bullet_pos.get_x() + this->force, 
                 bullet_pos.get_y() +(1 - cos(rangle)), 
                 bullet_pos.get_z() );
@@ -120,20 +120,20 @@ void Cannon::shoot()
     this->b_index = 0;
 }
 
-void Cannon::set_angel(float inc)
+void Cannon::set_angle(float inc)
 {
     Animation an;
     
-    this->angel += inc;
+    this->angle += inc;
 
-    if(this->angel > 85.0)
-        this->angel = 85;
-     else if(this->angel < 0.0)
-        this->angel = 0;
+    if(this->angle > 85.0)
+        this->angle = 85;
+     else if(this->angle < 0.0)
+        this->angle = 0;
 
     Vertex P1(this->bullet_pos.get_x(), this->bullet_pos.get_y(), this->bullet_pos.get_z() + 0.2);
     Vertex P2(this->bullet_pos.get_x(), this->bullet_pos.get_y(), this->bullet_pos.get_z() - 0.2);
-    this->body.set_mmodel(an.Rp1p2(P1, P2, this->angel));
+    this->body.set_mmodel(an.Rp1p2(P1, P2, this->angle));
 }
 
 void Cannon::set_force(float inc)
