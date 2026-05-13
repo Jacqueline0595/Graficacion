@@ -57,8 +57,7 @@ int main()
     
     my_cannon.main_loop();
     
-    /* 
-    my_cannon.shoot(); */
+    // my_cannon.shoot(); 
 
     return 0;
 }
