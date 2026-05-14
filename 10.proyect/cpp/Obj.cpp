@@ -10,6 +10,7 @@ void Obj::load(string file_name)
     this->file_name = file_name;
     this->vertices = {};
     this->faces = {};
+    vector<Vertex> normals = {};
 
     // Obtener el nombre del archivo sin la ruta
     string fname = file_name;
@@ -39,30 +40,23 @@ void Obj::load(string file_name)
 
         if(!elements.empty())
         {
-            if (elements[0] == "o")
-            {
-                string oname;
-
-                // Concatenar los elementos restantes para formar el nombre del objeto
-                for (size_t i = 1; i < elements.size(); i++)
-                {
-                    oname += elements[i];
-                }
-
-                // Si se obtuvo un nombre válido, actualizar el nombre del objeto
-                if (oname != "")
-                {
-                    this->name = oname;
-                }
-            }
-            else if(elements[0] == "v")
+            if(elements[0] == "v")
             {
                 float x = stof(elements[1]);
                 float y = stof(elements[2]);
                 float z = stof(elements[3]);
 
                 Vertex v(x, y, z);
-                vertices.push_back(v);
+                this->vertices.push_back(v);
+            }
+            else if(elements[0] == "vn")
+            {
+                float nx = stof(elements[1]);
+                float ny = stof(elements[2]);
+                float nz = stof(elements[3]);
+
+                Vertex n(nx, ny, nz);
+                normals.push_back(n);
             }
             else if(elements[0] == "f")
             {
@@ -70,6 +64,10 @@ void Obj::load(string file_name)
                 for(int i=1; i < elements.size(); i++)
                 {
                     unsigned int index = stoi(this->split(elements[i], '/')[0]) - 1;
+                    unsigned int nindex = stoi(this->split(elements[i], '/')[1]) - 1;
+                    this->vertices[index].set_nx( normals[nindex].get_x() );
+                    this->vertices[index].set_ny( normals[nindex].get_y() );
+                    this->vertices[index].set_nz( normals[nindex].get_z() );
                     vindex.push_back(index);
                 }
                 Face f(vindex);
@@ -78,4 +76,9 @@ void Obj::load(string file_name)
         }
     }
     OBJ.close();
+
+    for (Vertex v: this->vertices)
+    {
+        v.normal_average();
+    }
 }
