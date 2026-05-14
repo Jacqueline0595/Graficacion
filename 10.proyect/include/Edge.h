@@ -3,11 +3,17 @@
 
 #pragma once
 
+#include <iostream>
+#include "Vertex.h"
+
+using namespace std;
+
 class Edge
 {
 public:
-    Edge();
-    ~Edge();
+    Vertex vi, ve;
+    Edge(Vertex vi, Vertex ve);
+    void print();
 
 private:
 

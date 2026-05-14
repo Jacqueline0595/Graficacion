@@ -1,11 +1,14 @@
-#include "Edge.h"
+#include "../include/Edge.h"
 
-Edge::Edge()
+Edge::Edge(Vertex vi, Vertex ve)
 {
-
+    this->vi = vi;
+    this->ve = ve;
 }
 
-Edge::~Edge()
+void Edge::print()
 {
-
+    vi.print();
+    cout << " -> ";
+    ve.print();
 }
