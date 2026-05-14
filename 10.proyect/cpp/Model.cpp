@@ -6,6 +6,10 @@ Model::Model()
     this->r = 1.0f;
     this->g = 1.0f;
     this->b = 1.0f;
+
+    arma::Mat<float> identify;
+    identify.eye(4, 4);
+    this->Mmodel = glm::make_mat4(identify.memptr());
 }
 
 vector<string> Model::split(string org_str, char delim)
@@ -88,4 +92,30 @@ vector <GLfloat> Model::get_color_buffer_data()
         }
     }
     return(color_data);
+}
+
+vector <GLfloat> Model::get_normal_buffer_data()
+{
+    vector<GLfloat> normal_data = {};
+    for(Face f: this->faces)
+    {
+        for(unsigned int vi: f.get_indices())
+        {
+            Vertex v = this->vertices[vi];
+            normal_data.push_back(v.get_nx());
+            normal_data.push_back(v.get_ny());
+            normal_data.push_back(v.get_nz());
+        }
+    }
+    return(normal_data);
+}
+
+glm::mat4 Model::get_mmodel()
+{
+    return(this->Mmodel);
+}
+
+void Model::set_mmodel(arma::Mat<float> transform)
+{
+    this->Mmodel = glm::make_mat4(transform.memptr());
 }

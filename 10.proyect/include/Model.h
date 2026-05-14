@@ -7,18 +7,20 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <vector>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "Vertex.h"
 #include "Face.h"
-#include <vector>
 #include "OpenGL.h"
+
+using namespace std;
 
 class Model
 {
 public:
-    // Model() = {};
     Model();
     void info();
-    // pasar un parametro
     virtual void load(string file_name) = 0;
     vector<Vertex> get_vertices();
     unsigned int get_object();
@@ -26,6 +28,9 @@ public:
     void set_color(float r, float g, float b);
     vector <GLfloat> get_vertex_buffer_data();
     vector <GLfloat> get_color_buffer_data();
+    vector <GLfloat> get_normal_buffer_data();
+    glm::mat4 get_mmodel();
+    void set_mmodel(arma::Mat<float> transform);
 
 protected:
     vector<Vertex> vertices;
@@ -34,7 +39,8 @@ protected:
     string file_name;
     unsigned int gl_object;
     float r, g, b;
-    
+    glm::mat4 Mmodel;
+
     vector<string> split(string org_str, char delim);
 };
 
