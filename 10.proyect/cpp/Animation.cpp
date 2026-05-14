@@ -31,7 +31,9 @@ vector<Vertex> Animation::bezier(Vertex P1, Vertex P2, Vertex P3, Vertex P4, flo
     for(float t = 0.0; t < 1.0; t += dt)
     {
         arma::Row<float> T = { powf(t, 3), powf(t, 2), t, 1.0f };
+
         arma::Mat<float> Qt = T * MB * GB;
+
         Vertex v(Qt.at(0,0), Qt.at(0,1), Qt.at(0,2));
         c.push_back(v);
     }
@@ -101,6 +103,10 @@ arma::Mat<float> Animation::Rp1p2(Vertex P1, Vertex P2, float theta)
                             
     // paso 3
     float D2 = sqrt( powf(P2.get_x()-P1.get_x(), 2) + powf(P2.get_y()-P1.get_y(), 2) + powf(P2.get_z()-P1.get_z(), 2) );
+
+    // evitar división entre 0
+    if (D2 == 0) D2 = 1;
+
     arma::Mat<float> Rx3 = { { 1, 0, 0, 0 },
                             { 0, D1 / D2, -(P2.get_y()-P1.get_y()) / D2, 0 },
                             { 0, (P2.get_y()-P1.get_y()) / D2, D1 / D2, 0 },
