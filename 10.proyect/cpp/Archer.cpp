@@ -1,6 +1,6 @@
 #include "../include/Archer.h"
 
-Archer::Archer(float x, float y, float z)
+Archer::Archer(float x, float y, float z, GLFWkeyfun callback)
 {
     this->position.set_x(x);
     this->position.set_y(y);
@@ -12,6 +12,7 @@ Archer::Archer(float x, float y, float z)
 
     this->angel = 0.0; 
     this->force = 1.0;
+    this->shooted = false;
 
     this->upperBody.load("models/upperBody.obj"); 
     this->lowerBody.load("models/lowerBody.obj"); 
@@ -27,41 +28,76 @@ Archer::Archer(float x, float y, float z)
     this->arrow.set_color(1.0f, 0.0f, 1.0f);
 
     this->arrow_trayectory = {};
+    this->arrow_index = 0;
 
     // crear la ventana
     this->gl.createWindow( 800, 600, "Archer simulation" );
-    this->gl.setKeyCallBack(this->key_callback);
+    this->gl.setKeyCallBack(callback);
 
     // color del fondo
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
     unsigned int object_uppB = this->gl.create_object(this->upperBody.get_vertex_buffer_data(),
-                this->upperBody.get_color_buffer_data());
+                this->upperBody.get_color_buffer_data(),
+                this->upperBody.get_normal_buffer_data() );
 
     unsigned int object_lowB = this->gl.create_object(this->lowerBody.get_vertex_buffer_data(),
-                this->lowerBody.get_color_buffer_data());
+                this->lowerBody.get_color_buffer_data(),
+                this->lowerBody.get_normal_buffer_data() );
 
     unsigned int object_t = this->gl.create_object(this->target.get_vertex_buffer_data(),
-                this->target.get_color_buffer_data());
+                this->target.get_color_buffer_data(),
+                this->target.get_normal_buffer_data() );
 
     unsigned int object_a = this->gl.create_object(this->arrow.get_vertex_buffer_data(),
-                this->arrow.get_color_buffer_data());
+                this->arrow.get_color_buffer_data(),
+                this->arrow.get_normal_buffer_data() );
 
     unsigned int object_b = this->gl.create_object(this->bow.get_vertex_buffer_data(),
-                this->bow.get_color_buffer_data());
-
+                this->bow.get_color_buffer_data(),
+                this->bow.get_normal_buffer_data() );
 
     this->upperBody.set_object(object_uppB); 
     this->lowerBody.set_object(object_lowB);  
     this->target.set_object(object_t);
     this->arrow.set_object(object_a);         
     this->bow.set_object(object_b);
+
+    this->View = glm::lookAt(
+        glm::vec3(0, 5, 0), // Camera position
+        glm::vec3(0, 0, 0),  // Look at point
+        glm::vec3(0, 1, 0)   // Up vector
+    );
+
+    this->Proyection = glm::perspective( glm::radians(45.0f), 1024.0f / 768.0f, 0.1f, 100.0f );
+    this->Projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f);
 }
 
 void Archer::main_loop()
 {
+    Animation an;
     do {
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+        if(this->shooted)
+        {
+            if (this->arrow_index < this->arrow_trayectory.size())
+            {
+                Vertex bt = this->arrow_trayectory[this->arrow_index];
+
+                arma::Mat<float> T1 = an.T(bt.get_x(), bt.get_y(), bt.get_z());
+
+                this->arrow.set_mmodel(T1);
+
+                this->arrow_index++;
+            }
+            else 
+            {
+                this->shooted = false;
+
+                this->arrow_index = 0;
+            }
+        }
 
         this->gl.draw_object( this->upperBody.get_object() );
         this->gl.draw_object( this->lowerBody.get_object() );
@@ -104,29 +140,14 @@ void Archer::shootBow()
     // Generar trayectoria con Bezier
     this->arrow_trayectory = an.bezier(P1, P2, P3, P4, 0.1);
 
-    for (Vertex bt : this->arrow_trayectory)
-    {
-        vector<Vertex> transformed_vertices = {};
+    this->shooted = true;
 
-        arma::Mat<float> T1 = an.T(bt.get_x(), bt.get_y(), bt.get_z());
-
-        for (Vertex v : this->arrow.get_vertices())
-        {
-            arma::Col<float> vt = T1 * v.h();
-
-            Vertex vtp(
-                vt.at(0,0)/vt.at(3,0),
-                vt.at(1,0)/vt.at(3,0),
-                vt.at(2,0)/vt.at(3,0)
-            );
-
-            transformed_vertices.push_back(vtp);
-        }
-    }
+    this->arrow_index = 0;
 }
 
 void Archer::set_angel(float inc)
 {
+    Animation an;
     // Aumentar o disminuir el ángulo de disparo
     this->angel += inc;
 
@@ -134,6 +155,20 @@ void Archer::set_angel(float inc)
         this->angel = 85;
     else if (this->angel < 0.0)
         this->angel = 0;
+
+    Vertex P1(
+        this->arrow_pos.get_x(),
+        this->arrow_pos.get_y(),
+        this->arrow_pos.get_z() + 0.2
+    );
+
+    Vertex P2(
+        this->arrow_pos.get_x(),
+        this->arrow_pos.get_y(),
+        this->arrow_pos.get_z() - 0.2
+    );
+
+    this->upperBody.set_mmodel(an.Rp1p2(P1, P2, this->angel));
 }
 
 void Archer::set_force(float inc)
@@ -159,4 +194,9 @@ void Archer::key_callback(GLFWwindow* window, int key, int scancode, int action,
         cout << "Disminuir la fuerza" << endl;
     if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
         cout << "Aumentar la fuerza" << endl;
+}
+
+void Archer::set_view(glm::mat4 view)
+{
+    this->View = view;
 }

@@ -15,11 +15,12 @@ using namespace std;
 class Archer
 {
 public:
-    Archer(float x, float y, float z);
+    Archer(float x, float y, float z, GLFWkeyfun callback);
     void shootBow();
     void set_angel(float inc);
     void set_force(float inc);
     void main_loop();
+    void set_view(glm::mat4 view);
 
 private:
     OpenGL gl;
@@ -40,6 +41,13 @@ private:
     Ply arrow;
 
     vector<Vertex> arrow_trayectory;
+
+    unsigned int arrow_index;
+
+    glm::mat4 View;
+    glm::mat4 Projection;
+
+    bool shooted;
 
     static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 };
