@@ -34,6 +34,11 @@ void Obj::load(string file_name)
     string line;
 
     ifstream OBJ(file_name);
+    if(!OBJ.is_open())
+    {
+        cout << "Error opening OBJ file: " << file_name << endl;
+        return;
+    }
     while ( getline(OBJ, line) )
     {
         vector<string> elements = this->split(line, ' ');
@@ -42,42 +47,71 @@ void Obj::load(string file_name)
         {
             if(elements[0] == "v")
             {
-                float x = stof(elements[1]);
-                float y = stof(elements[2]);
-                float z = stof(elements[3]);
+                if(elements.size() >= 4)
+                {
+                    float x = stof(elements[1]);
+                    float y = stof(elements[2]);
+                    float z = stof(elements[3]);
 
-                Vertex v(x, y, z);
-                this->vertices.push_back(v);
+                    Vertex v(x, y, z);
+                    this->vertices.push_back(v);
+                }
             }
             else if(elements[0] == "vn")
             {
-                float nx = stof(elements[1]);
-                float ny = stof(elements[2]);
-                float nz = stof(elements[3]);
+                if(elements.size() >= 4)
+                {
+                    float nx = stof(elements[1]);
+                    float ny = stof(elements[2]);
+                    float nz = stof(elements[3]);
 
-                Vertex n(nx, ny, nz);
-                normals.push_back(n);
+                    Vertex n(nx, ny, nz);
+                    normals.push_back(n);
+                }
             }
             else if(elements[0] == "f")
             {
                 vector<unsigned int> vindex = {};
-                for(int i=1; i < elements.size(); i++)
+                for(size_t i=1; i < elements.size(); i++)
                 {
-                    unsigned int index = stoi(this->split(elements[i], '/')[0]) - 1;
-                    unsigned int nindex = stoi(this->split(elements[i], '/')[1]) - 1;
-                    this->vertices[index].set_nx( normals[nindex].get_x() );
-                    this->vertices[index].set_ny( normals[nindex].get_y() );
-                    this->vertices[index].set_nz( normals[nindex].get_z() );
+                    vector<string> parts = this->split(elements[i], '/');
+
+                    if(parts.empty())
+                        continue;
+
+                    if(parts[0] == "")
+                        continue;
+
+                    unsigned int index = stoi(parts[0]) - 1;
+
+                    if(index >= this->vertices.size())
+                        continue;
+
+                    if(parts.size() >= 3 && parts[2] != "")
+                    {
+                        unsigned int nindex = stoi(parts[2]) - 1;
+
+                        if(nindex < normals.size())
+                        {
+                            this->vertices[index].set_nx(normals[nindex].get_x());
+                            this->vertices[index].set_ny(normals[nindex].get_y());
+                            this->vertices[index].set_nz(normals[nindex].get_z());
+                        }
+                    }
+
                     vindex.push_back(index);
                 }
-                Face f(vindex);
-                this->faces.push_back(f);
+                if(vindex.size() >= 3)
+                {
+                    Face f(vindex);
+                    this->faces.push_back(f);
+                }
             }
         }
     }
     OBJ.close();
 
-    for (Vertex v: this->vertices)
+    for (Vertex& v: this->vertices)
     {
         v.normal_average();
     }
