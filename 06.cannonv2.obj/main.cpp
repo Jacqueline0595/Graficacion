@@ -4,7 +4,7 @@
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-Cannon my_cannon(-0.9, 0, 0, key_callback);
+Cannon my_cannon(-0.9, 0.1, 0, key_callback);
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {

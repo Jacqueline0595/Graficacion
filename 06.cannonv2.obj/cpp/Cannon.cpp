@@ -115,7 +115,7 @@ void Cannon::shoot()
                 0,
                 bullet_pos.get_z() );
 
-    this->b_trayectory = an.bezier(P1, P2, P3, P4, 0.1);
+    this->b_trayectory = an.bezier(P1, P2, P3, P4, 0.01);
     this->shooted = true;
     this->b_index = 0;
 }
