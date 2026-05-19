@@ -101,22 +101,36 @@ void Cannon::main_loop()
 
 void Cannon::shoot()
 {
+    if( this->shooted)
+    {
+        cout << "El cañon ya ha sido disparado, espera a que termine la trayectoria" << endl;
+        return;
+    }
+
+    cout << "Flecha disparada con bezier" << endl;
+
     Animation an;
 
-    Vertex P1 = bullet_pos;
     float rangle = this->angle * M_PI / 180.0; // Convertir a radianes
-    Vertex P2( bullet_pos.get_x() + this->force, 
-                bullet_pos.get_y() +(1 - cos(rangle)), 
-                bullet_pos.get_z() );
-    Vertex P3( bullet_pos.get_x() + (this->force * 2), 
-                P2.get_y(),
-                bullet_pos.get_z() );
-    Vertex P4( bullet_pos.get_x() + (this->force * 3), 
-                0,
+
+    Vertex P1 = bullet_pos;
+
+    Vertex P2(  bullet_pos.get_x() + this->force, 
+                bullet_pos.get_y() + (this->force * sin(rangle)), 
                 bullet_pos.get_z() );
 
-    this->b_trayectory = an.bezier(P1, P2, P3, P4, 0.01);
+    Vertex P3(  bullet_pos.get_x() + (this->force * 2), 
+                bullet_pos.get_y() + (this->force * sin(rangle)),
+                bullet_pos.get_z() );
+
+    Vertex P4( bullet_pos.get_x() + (this->force * 3), 
+                bullet_pos.get_y(), 
+                bullet_pos.get_z() );
+
+    this->b_trayectory = an.bezier(P1, P2, P3, P4, 0.001);
+
     this->shooted = true;
+
     this->b_index = 0;
 }
 

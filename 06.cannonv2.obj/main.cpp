@@ -52,7 +52,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 int main()
 {
-    my_cannon.set_angle(0);
+    my_cannon.set_angle(0.0);
     my_cannon.set_force(0.5);
     
     my_cannon.main_loop();
