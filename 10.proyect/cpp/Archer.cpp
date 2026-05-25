@@ -64,12 +64,12 @@ Archer::Archer(float x, float y, float z, GLFWkeyfun callback)
     this->bow.set_object(object_b);
 
     this->View = glm::lookAt(
-        glm::vec3(0, 5, 0), // Camera position
+        glm::vec3(0, 0, 5), // Camera position
         glm::vec3(0, 0, 0),  // Look at point
         glm::vec3(0, 1, 0)   // Up vector
     );
 
-    this->Proyection = glm::perspective( glm::radians(45.0f), 1024.0f / 768.0f, 0.1f, 100.0f );
+    // this->Proyection = glm::perspective( glm::radians(45.0f), 1024.0f / 768.0f, 0.1f, 100.0f );
     this->Projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f);
 }
 
@@ -99,11 +99,11 @@ void Archer::main_loop()
             }
         }
 
-        this->gl.draw_object( this->upperBody.get_object() );
-        this->gl.draw_object( this->lowerBody.get_object() );
-        this->gl.draw_object( this->target.get_object() );
-        this->gl.draw_object( this->arrow.get_object() );
-        this->gl.draw_object( this->bow.get_object() );
+        this->gl.draw_object( this->upperBody.get_object(), this->Projection * this->View * this->upperBody.get_mmodel() );
+        this->gl.draw_object( this->lowerBody.get_object(), this->Projection * this->View * this->lowerBody.get_mmodel() );
+        this->gl.draw_object( this->target.get_object(), this->Projection * this->View * this->target.get_mmodel() );
+        this->gl.draw_object( this->arrow.get_object(), this->Projection * this->View * this->arrow.get_mmodel() );
+        this->gl.draw_object( this->bow.get_object(), this->Projection * this->View * this->bow.get_mmodel() );
 
     } while ( !this->gl.should_close() );
 }
@@ -113,11 +113,17 @@ void Archer::shootBow()
     // Disparar la flecha a traves de una trayectoria curva (bezier)
     cout << "Flecha disparada con Bezier" << endl;
 
+    if( this->shooted )
+    {
+        cout << "La flecha ya ha sido disparada, espera a que termine su trayectoria" << endl;
+        return;
+    }
+
     Animation an;
 
-    Vertex P1 = this->arrow_pos;
-
     float rangle = this->angel * M_PI / 180.0; // a radianes
+
+    Vertex P1 = this->arrow_pos;
 
     Vertex P2(
         arrow_pos.get_x() + this->force,
@@ -138,7 +144,7 @@ void Archer::shootBow()
     );
 
     // Generar trayectoria con Bezier
-    this->arrow_trayectory = an.bezier(P1, P2, P3, P4, 0.1);
+    this->arrow_trayectory = an.bezier(P1, P2, P3, P4, 0.001);
 
     this->shooted = true;
 
@@ -156,17 +162,9 @@ void Archer::set_angel(float inc)
     else if (this->angel < 0.0)
         this->angel = 0;
 
-    Vertex P1(
-        this->arrow_pos.get_x(),
-        this->arrow_pos.get_y(),
-        this->arrow_pos.get_z() + 0.2
-    );
+    Vertex P1( this->arrow_pos.get_x(), this->arrow_pos.get_y(), this->arrow_pos.get_z() + 0.2 );
 
-    Vertex P2(
-        this->arrow_pos.get_x(),
-        this->arrow_pos.get_y(),
-        this->arrow_pos.get_z() - 0.2
-    );
+    Vertex P2( this->arrow_pos.get_x(), this->arrow_pos.get_y(), this->arrow_pos.get_z() - 0.2 );
 
     this->upperBody.set_mmodel(an.Rp1p2(P1, P2, this->angel));
 }

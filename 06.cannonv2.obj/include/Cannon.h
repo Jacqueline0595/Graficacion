@@ -24,18 +24,26 @@ public:
 
 private:
     OpenGL gl;
+    
     Vertex position;
     Vertex bullet_pos;
+
     float angle;
     float force; 
+
     Obj body;
     Obj bullet;
+
     Ply l_wheel;
     Ply r_wheel;
+
     vector<Vertex> b_trayectory;
+
     unsigned int b_index;
+
     glm::mat4 View;
     glm::mat4 Projection;
+
     bool shooted;
 
     static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);

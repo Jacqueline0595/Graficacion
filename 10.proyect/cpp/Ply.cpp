@@ -48,10 +48,13 @@ void Ply::load(string file_name)
 
         if (elements[0] == "element")
         {
-            if (elements[1] == "vertex")
-                vertex_count = stoi(elements[2]);
-            else if (elements[1] == "face")
-                face_count = stoi(elements[2]);
+            if (elements.size() >= 3)
+            {
+                if (elements[1] == "vertex")
+                    vertex_count = stoi(elements[2]);
+                else if (elements[1] == "face")
+                    face_count = stoi(elements[2]);
+            }
         }
 
         if (elements[0] == "end_header")
@@ -66,18 +69,25 @@ void Ply::load(string file_name)
         getline(PLY, line);
         vector<string> elements = split(line, ' ');
 
-        float x = stof(elements[0]);
-        float y = stof(elements[1]);
-        float z = stof(elements[2]);
+        if (elements.size() >= 3)
+        {
+            float x = stof(elements[0]);
+            float y = stof(elements[1]);
+            float z = stof(elements[2]);
 
-        Vertex v(x, y, z);
-        vertices.push_back(v);
+            Vertex v(x, y, z);
+            vertices.push_back(v);
+        }
     }
 
     for (int i = 0; i < face_count; i++)
     {
         getline(PLY, line);
+
         vector<string> elements = split(line, ' ');
+
+        if(elements.empty())
+            continue;
 
         int vertices_in_face = stoi(elements[0]);
 
@@ -85,12 +95,20 @@ void Ply::load(string file_name)
 
         for (int j = 1; j <= vertices_in_face; j++)
         {
+            if (j >= elements.size())
+                break;
+
             unsigned int index = stoi(elements[j]);
-            vindex.push_back(index);
+
+            if (index < vertices.size())
+                vindex.push_back(index);
         }
 
-        Face f(vindex);
-        faces.push_back(f);
+        if (vindex.size() >= 3)
+        {
+            Face f(vindex);
+            faces.push_back(f);
+        }
     }
 
     PLY.close();

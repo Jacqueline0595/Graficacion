@@ -31,7 +31,7 @@ void OpenGL::createWindow(long width, long height, std::string title)
     }
 	glfwSetInputMode(this->window, GLFW_STICKY_KEYS, GLFW_TRUE);
 
-    this->programID = loadShaders( "shaders/MPVVertexShader.vertexshader", "shaders/MPVFragmentShader.fragmentshader" );
+    this->programID = loadShaders( "shaders/SimpleVertexShader.vertexshader", "shaders/SimpleFragmentShader.fragmentshader" );
     glUseProgram(this->programID);
 
 	// Enable depth test

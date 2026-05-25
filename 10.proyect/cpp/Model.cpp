@@ -27,7 +27,7 @@ vector<string> Model::split(string org_str, char delim)
    	// Splitting the str string by delimiter
     while (getline(ss, t, del))
     {
-        if (t != "" && t != "\r")
+        if (t != "\r")
             str_array.push_back(t);
     }
  
