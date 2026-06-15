@@ -110,6 +110,13 @@ void Archer::main_loop()
 
 void Archer::shootBow()
 {
+    // Evitar disparar dos veces
+    if (this->shooted)
+    {
+        cout << "La flecha ya está en vuelo. Espera a que aterrice." << endl;
+        return;
+    }
+
     // Disparar la flecha a traves de una trayectoria curva (bezier)
     cout << "Flecha disparada con Bezier" << endl;
 
@@ -128,13 +135,13 @@ void Archer::shootBow()
     Vertex P2(
         arrow_pos.get_x() + this->force,
         arrow_pos.get_y() + (1 - cos(rangle)),
-        arrow_pos.get_z()
+        arrow_pos.get_z() + sin(rangle) * 0.3
     );
 
     Vertex P3(
         arrow_pos.get_x() + (this->force * 2),
         P2.get_y(),
-        arrow_pos.get_z()
+        arrow_pos.get_z() + sin(rangle) * 0.5
     );
 
     Vertex P4(
